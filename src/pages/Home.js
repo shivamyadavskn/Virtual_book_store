@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Book from '../components/Book/Book';
-import BookDetail from './components/Book/BookDetail';
-import SearchBar from './components/search/SearchBar';
+import Book from './components/Book/Book.js';
+import BookDetail from './components/Book/BookDetail.js';
+import SearchBar from './components/search/SearchBar.js';
 
 const Home = ({ books, onBookClick, searchQuery, onSearch }) => {
   const [selectedBook, setSelectedBook] = useState(null);
