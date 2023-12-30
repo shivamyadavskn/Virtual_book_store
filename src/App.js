@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import Home from './pages/Home';
+import { fetchData } from './services/api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  const [books, setBooks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    fetchData('harry potter').then((data) => setBooks((prevBooks) => [...prevBooks, ...data]));
+    fetchData('sherlock holmes').then((data) => setBooks((prevBooks) => [...prevBooks, ...data]));
+  }, []);
+
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    const data = await fetchData(query);
+    setBooks(data);
+  };
+
+  const handleBookClick = (book) => {
+    // Handle book click (expand banner, etc.)
+    console.log('Book clicked:', book);
+  };
+
+  return <Home books={books} onBookClick={handleBookClick} searchQuery={searchQuery} onSearch={handleSearch} />;
+};
 
 export default App;
